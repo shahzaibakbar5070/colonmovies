@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Account — Colon-Movies</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="ambient-glow">
+    <div class="orb-1"></div>
+    <div class="orb-2"></div>
+  </div>
+
+  <div class="auth-page-wrap">
+    <div class="auth-card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+        <div style="font-size:1.8rem;">🎬</div>
+        <span style="font-family:var(--font-display);font-size:1.5rem;font-weight:800;color:var(--red-bright);">COLON-MOVIES</span>
+      </div>
+
+      <h2>Create Account</h2>
+      <p class="subtitle">Join thousands of movie fans and build your dream watchlist</p>
+
+      <div class="form-error" id="regError"></div>
+      <div class="form-success" id="regSuccess"></div>
+
+      <form id="regForm">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" class="form-input" placeholder="e.g. CinemaBuff" required minlength="3" />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" class="form-input" placeholder="e.g. you@example.com" required />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password (min 6 characters)</label>
+          <input type="password" id="password" class="form-input" placeholder="••••••••" required minlength="6" />
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg" style="margin-top:12px;">Create Account →</button>
+      </form>
+
+      <div style="margin-top:24px;text-align:center;font-size:0.92rem;color:var(--text-muted);">
+        Already have an account? <a href="login.html" style="color:var(--red-bright);font-weight:600;">Sign in here</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script>
+    if (Auth.isLoggedIn()) window.location.href = "/profile.html";
+
+    document.getElementById("regForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const errEl = document.getElementById("regError");
+      const succEl = document.getElementById("regSuccess");
+      const username = document.getElementById("username").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const pass = document.getElementById("password").value;
+
+      errEl.classList.remove("show");
+      succEl.textContent = "Creating your account...";
+      succEl.classList.add("show");
+
+      const res = await Auth.register(username, email, pass);
+      if (res.success) {
+        succEl.textContent = "Account created successfully! Redirecting to login...";
+        setTimeout(() => { window.location.href = "/login.html"; }, 1000);
+      } else {
+        succEl.classList.remove("show");
+        errEl.textContent = res.message || "Registration failed.";
+        errEl.classList.add("show");
+      }
+    });
+  </script>
+</body>
+</html>

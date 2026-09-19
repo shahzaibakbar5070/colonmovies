@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Watchlist & Profile — Colon-Movies</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="ambient-glow">
+    <div class="orb-1"></div>
+    <div class="orb-2"></div>
+  </div>
+
+  <main class="section-wrap" style="padding-top:40px;">
+    <!-- Profile Header Card -->
+    <div style="background:rgba(18,12,16,0.85);backdrop-filter:blur(20px);border:1px solid rgba(229,9,20,0.3);border-radius:var(--radius-lg);padding:32px;margin-bottom:40px;box-shadow:0 16px 40px rgba(0,0,0,0.8);">
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+        <div id="userAvatar" style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--red-bright),var(--red-deep));display:flex;align-items:center;justify-content:center;font-size:2rem;box-shadow:0 0 20px var(--red-glow);">🎬</div>
+        <div style="flex:1;">
+          <h1 id="userUsername" style="font-family:var(--font-display);font-size:2.2rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Cinephile</h1>
+          <p id="userEmail" style="color:var(--text-muted);font-size:0.95rem;">user@example.com</p>
+        </div>
+        <div style="display:flex;gap:16px;">
+          <div class="score-box" style="min-width:100px;">
+            <span class="score-val" id="watchlistCount">0</span>
+            <span class="score-lbl">Saved Movies</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Watchlist Section -->
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">My Saved Watchlist</h2>
+        <p class="section-subtitle">Movies you plan to watch or love</p>
+      </div>
+    </div>
+
+    <!-- Empty State or Movies Grid -->
+    <div id="emptyState" style="text-align:center;padding:80px 20px;background:rgba(255,255,255,0.02);border:1px dashed var(--border-color);border-radius:var(--radius-lg);display:none;">
+      <div style="font-size:3rem;margin-bottom:12px;">🍿</div>
+      <h3 style="font-size:1.3rem;margin-bottom:8px;">Your Watchlist is Empty</h3>
+      <p style="color:var(--text-muted);margin-bottom:20px;">Explore the catalog and save movies with the "Add to Watchlist" button!</p>
+      <a href="index.html" class="btn btn-primary">Browse Blockbusters</a>
+    </div>
+
+    <div class="movies-grid" id="watchlistGrid"></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>© 2026 <strong>Colon-Movies</strong>. Personal Cinema Cloud.</div>
+      <div class="footer-links">
+        <a href="index.html">Catalog</a>
+        <a href="about.html">About</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/movieData.js"></script>
+  <script src="js/movieApi.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/nav.js"></script>
+  <script>
+    if (!Auth.isLoggedIn()) {
+      window.location.href = "/login.html";
+    }
+
+    async function initProfile() {
+      renderNav("watchlist");
+      const user = Auth.getCurrentUser();
+      if (!user) return;
+
+      document.getElementById("userUsername").textContent = user.username;
+      document.getElementById("userEmail").textContent = user.email;
+      document.getElementById("userAvatar").textContent = user.avatar || "🎬";
+
+      // Fetch fresh watchlist from backend
+      await Auth.fetchWatchlist();
+      renderWatchlist();
+    }
+
+    function renderWatchlist() {
+      const list = Auth.getWatchlist();
+      document.getElementById("watchlistCount").textContent = list.length;
+
+      const grid = document.getElementById("watchlistGrid");
+      const empty = document.getElementById("emptyState");
+
+      if (!list || list.length === 0) {
+        grid.innerHTML = "";
+        empty.style.display = "block";
+        return;
+      }
+
+      empty.style.display = "none";
+      grid.innerHTML = list.map(m => `
+        <div class="movie-card">
+          <div class="movie-poster-wrap" onclick="window.location.href='movie.html?id=${m.id}'">
+            <img src="${m.poster_path || 'favicon.svg'}" alt="${m.title}" loading="lazy" />
+            <div class="movie-rating-badge">⭐ ${m.vote_average}</div>
+          </div>
+          <div class="movie-card-body">
+            <h3 class="movie-card-title" onclick="window.location.href='movie.html?id=${m.id}'">${m.title}</h3>
+            <div class="movie-card-meta">
+              <span>${m.release_date || "TBA"}</span>
+              <button class="btn-remove-fav" onclick="handleRemoveMovie(${m.id})">❌ Remove</button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    // Instant optimistic 1-click removal
+    async function handleRemoveMovie(movieId) {
+      await Auth.removeWatchlist(movieId);
+      renderWatchlist();
+    }
+
+    document.addEventListener("DOMContentLoaded", initProfile);
+  </script>
+</body>
+</html>

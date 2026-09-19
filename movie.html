@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie Details — Colon-Movies</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="ambient-glow">
+    <div class="orb-1"></div>
+    <div class="orb-2"></div>
+  </div>
+
+  <div id="detailContent">
+    <div class="detail-hero" id="detailHero">
+      <div class="hero-gradient-overlay"></div>
+    </div>
+
+    <div class="detail-container">
+      <div class="detail-grid">
+        <div class="detail-poster-wrap">
+          <img id="detailPoster" src="" alt="Movie Poster" onerror="this.src='favicon.svg'" />
+        </div>
+
+        <div class="detail-info">
+          <h1 class="detail-title" id="detailTitle">Loading...</h1>
+          
+          <div class="detail-badges">
+            <div class="score-box imdb">
+              <span class="score-val" id="detailImdbRating">8.5</span>
+              <span class="score-lbl">IMDb Rating</span>
+            </div>
+            <div class="score-box">
+              <span class="score-val" id="detailYear">2024</span>
+              <span class="score-lbl">Release Year</span>
+            </div>
+            <div class="score-box">
+              <span class="score-val" id="detailRuntime">120m</span>
+              <span class="score-lbl">Runtime</span>
+            </div>
+          </div>
+
+          <div id="detailGenres" style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;"></div>
+
+          <p class="detail-overview" id="detailSynopsis"></p>
+
+          <div class="detail-meta-list">
+            <div>
+              <div class="meta-item-lbl">Director</div>
+              <div class="meta-item-val" id="detailDirector">Christopher Nolan</div>
+            </div>
+            <div>
+              <div class="meta-item-lbl">Availability</div>
+              <div class="meta-item-val" style="color:#68d391;">Worldwide Theaters & Streaming</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:34px;">
+            <button id="saveWatchlistBtn" class="btn btn-outline btn-lg" onclick="handleWatchlistToggle()">🤍 Add to Watchlist</button>
+            <button class="btn btn-primary btn-lg" onclick="openTrailer()">▶ Watch Trailer</button>
+          </div>
+
+          <div>
+            <h3 style="font-size:1.15rem;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;">Top Billed Cast</h3>
+            <div class="cast-grid" id="castGrid"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Similar Movies Section -->
+      <div style="margin-top:60px;">
+        <h3 class="section-title" style="margin-bottom:20px;">You Might Also Like</h3>
+        <div class="movies-grid" id="similarGrid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>© 2026 <strong>Colon-Movies</strong>. Movie details & ratings.</div>
+      <div class="footer-links">
+        <a href="index.html">← Back to Catalog</a>
+        <a href="profile.html">My Watchlist</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/movieData.js"></script>
+  <script src="js/movieApi.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/movie.js"></script>
+</body>
+</html>

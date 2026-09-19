@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us — Colon-Movies</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="ambient-glow">
+    <div class="orb-1"></div>
+    <div class="orb-2"></div>
+  </div>
+
+  <main class="section-wrap" style="padding-top:60px;">
+    <div style="max-width:800px;margin:0 auto;text-align:center;">
+      <div style="font-size:3.5rem;margin-bottom:16px;">🎬</div>
+      <h1 class="section-title" style="justify-content:center;font-size:2.8rem;margin-bottom:18px;">About Colon-Movies</h1>
+      <p style="font-size:1.15rem;color:#d1d1d6;line-height:1.7;margin-bottom:34px;">
+        Colon-Movies is a next-generation cinematic encyclopedia built for film aficionados, casual viewers, and movie buffs. 
+        Engineered with a stunning crimson and obsidian aesthetic, blazing-fast search, curated blockbusters, and instant personal watchlists.
+      </p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;text-align:left;margin-top:40px;">
+        <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border-color);border-radius:var(--radius-md);padding:24px;">
+          <div style="font-size:1.8rem;margin-bottom:10px;">⚡</div>
+          <h3 style="font-size:1.1rem;margin-bottom:8px;">Instant Watchlists</h3>
+          <p style="font-size:0.9rem;color:var(--text-muted);line-height:1.5;">Save or remove movies in real-time with zero page reloads.</p>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border-color);border-radius:var(--radius-md);padding:24px;">
+          <div style="font-size:1.8rem;margin-bottom:10px;">⭐</div>
+          <h3 style="font-size:1.1rem;margin-bottom:8px;">IMDb Ratings & Info</h3>
+          <p style="font-size:0.9rem;color:var(--text-muted);line-height:1.5;">Access verified scores, cast lists, directors, and runtimes.</p>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border-color);border-radius:var(--radius-md);padding:24px;">
+          <div style="font-size:1.8rem;margin-bottom:10px;">🍿</div>
+          <h3 style="font-size:1.1rem;margin-bottom:8px;">HD Trailers</h3>
+          <p style="font-size:0.9rem;color:var(--text-muted);line-height:1.5;">Watch official movie trailers directly inside the interactive theater modal.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:50px;">
+        <a href="index.html" class="btn btn-primary btn-lg">Start Exploring Cinema →</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>© 2026 <strong>Colon-Movies</strong>. All rights reserved.</div>
+      <div class="footer-links">
+        <a href="index.html">Explore</a>
+        <a href="profile.html">Watchlist</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/nav.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => renderNav("about"));
+  </script>
+</body>
+</html>
